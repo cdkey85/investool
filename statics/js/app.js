@@ -448,7 +448,55 @@ $(document).ready(function () {
 
   // 导出结果csv文件
   $(".export-result-btn").click(function (e) {
-    tableExport("selector_result_table", "investool-exported", "csv");
+    var table = document.getElementById("selector_result_table");
+    if (!table) {
+      M.toast({ html: "未找到表格数据" });
+      return;
+    }
+    
+    try {
+      // 创建 TableExport 实例，不生成按钮
+      var exporter = new TableExport(table, {
+        formats: ["csv"],
+        filename: "investool-exported",
+        bootstrap: false,
+        exportButtons: false  // 不生成导出按钮
+      });
+      
+      // 直接获取导出数据
+      var exportData = exporter.getExportData();
+      var tableKeys = Object.keys(exportData);
+      
+      if (tableKeys.length === 0) {
+        M.toast({ html: "未找到导出数据" });
+        return;
+      }
+      
+      var tableId = tableKeys[0];
+      var csvData = exportData[tableId].csv;
+      
+      if (!csvData) {
+        M.toast({ html: "CSV数据为空" });
+        return;
+      }
+      
+      // 调用导出方法
+      exporter.export2file(
+        csvData.data,
+        csvData.mimeType,
+        csvData.filename,
+        csvData.fileExtension,
+        csvData.merges || [],
+        csvData.RTL || false,
+        csvData.sheetname || "Sheet1"
+      );
+      
+      M.toast({ html: "导出成功！" });
+      
+    } catch (err) {
+      console.error("导出失败:", err);
+      M.toast({ html: "导出失败: " + err.message });
+    }
   });
 
   // 展示字段设置
