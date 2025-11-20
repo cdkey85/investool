@@ -25,5 +25,10 @@ app
 *.tar.gz
 
 statics/js/app.min.*.js
-*.json
 cron/*.json
+
+eastmoney_py/
+plantuml_diagrams/
+*.py
+*.pyc
+.vscode/
