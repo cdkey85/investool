@@ -1,0 +1,23 @@
+{
+    "go.goroot": "C:\\Program Files\\Go",
+    "go.gopath": "${env:USERPROFILE}\\go",
+    "go.toolsManagement.autoUpdate": true,
+    "go.useLanguageServer": true,
+    "go.buildOnSave": "off",
+    "go.lintOnSave": "off",
+    "go.vetOnSave": "off",
+    "go.delveConfig": {
+        "dlvLoadConfig": {
+            "followPointers": true,
+            "maxVariableRecurse": 1,
+            "maxStringLen": 120,
+            "maxArrayValues": 64,
+            "maxStructFields": -1
+        },
+        "apiVersion": 2,
+        "showGlobalVariables": false
+    },
+    "terminal.integrated.env.windows": {
+        "PATH": "C:\\Program Files\\Go\\bin;${env:USERPROFILE}\\go\\bin;${env:PATH}"
+    }
+}

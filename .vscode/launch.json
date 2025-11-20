@@ -1,0 +1,86 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug Exportor (Excel)",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "program": "./main.go",
+            "args": [
+                "-l",
+                "info",
+                "exportor",
+                "-f",
+                "./dist/test.xlsx"
+            ],
+            "showLog": true
+        },
+        {
+            "name": "Debug Exportor (JSON)",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "program": "./main.go",
+            "args": [
+                "-l",
+                "info",
+                "exportor",
+                "-f",
+                "./dist/test.json"
+            ]
+        },
+        {
+            "name": "Debug Exportor (Default)",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "program": "./main.go",
+            "args": [
+                "-l",
+                "info",
+                "exportor"
+            ]
+        },
+        {
+            "name": "Debug Webserver",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "program": "./main.go",
+            "args": [
+                "-l",
+                "info",
+                "webserver"
+            ]
+        },
+        {
+            "name": "Debug Checker",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "program": "./main.go",
+            "args": [
+                "-l",
+                "info",
+                "checker",
+                "-k",
+                "贵州茅台"
+            ]
+        },
+        {
+            "name": "Debug Index",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "program": "./main.go",
+            "args": [
+                "-l",
+                "info",
+                "index",
+                "-c",
+                "000300"
+            ]
+        }
+    ]
+}
