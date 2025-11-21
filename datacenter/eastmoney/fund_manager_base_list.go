@@ -86,7 +86,7 @@ func (e EastMoney) FundMangerBaseList(ctx context.Context, mftype string, sortCo
 	total := 0
 	for {
 		apiurl := fmt.Sprintf(
-			"https://fundmapi.eastmoney.com/fundmobapi/FundMApi/FundMangerBaseList.ashx?COMPANYCODES=&MFTYPE=%s&Sort=desc&SortColumn=%s&deviceid=fundmanager2016&pageIndex=%d&pageSize=%d&plat=Iphone&product=EFund&version=4.3.0",
+			"http://fundmapi.eastmoney.com/fundmobapi/FundMApi/FundMangerBaseList.ashx?COMPANYCODES=&MFTYPE=%s&Sort=desc&SortColumn=%s&deviceid=fundmanager2016&pageIndex=%d&pageSize=%d&plat=Iphone&product=EFund&version=4.3.0",
 			mftype,
 			sortColum,
 			index,
@@ -182,7 +182,7 @@ func (e EastMoney) QueryFundMsnMangerInfo(ctx context.Context, mgrid string) (*R
 	beginTime := time.Now()
 	resp := &RespFundMsnManagerInfo{}
 	apiurl := fmt.Sprintf(
-		"https://fundztapi.eastmoney.com/FundSpecialApiNew/FundMSNMangerInfo?FCODE=%s&plat=Iphone&deviceid=123&product=EFund&version=6.4.7",
+		"http://fundztapi.eastmoney.com/FundSpecialApiNew/FundMSNMangerInfo?FCODE=%s&plat=Iphone&deviceid=123&product=EFund&version=6.4.7",
 		mgrid,
 	)
 	logging.Debug(ctx, "EastMoney QueryFundMsnMangerInfo "+apiurl+" begin")

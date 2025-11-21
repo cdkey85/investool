@@ -24,7 +24,7 @@ type SearchFundInfo struct {
 // SearchFund 关键词搜索， 股票、代码、拼音
 func (e EastMoney) SearchFund(ctx context.Context, kw string) (results []SearchFundInfo, err error) {
 	count := 10
-	apiurl := fmt.Sprintf("https://fundsuggest.eastmoney.com/FundCodeNew.aspx?input=%s&count=%d&cb=x", kw, count)
+	apiurl := fmt.Sprintf("http://fundsuggest.eastmoney.com/FundCodeNew.aspx?input=%s&count=%d&cb=x", kw, count)
 	logging.Debug(ctx, "EastMoney SearchFund "+apiurl+" begin")
 	beginTime := time.Now()
 	header := map[string]string{

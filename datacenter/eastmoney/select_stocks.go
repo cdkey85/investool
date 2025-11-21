@@ -227,7 +227,7 @@ func (e EastMoney) QuerySelectedStocks(ctx context.Context) (StockInfoList, erro
 
 // QuerySelectedStocksWithFilter 自定义选股指标值筛选股票
 func (e EastMoney) QuerySelectedStocksWithFilter(ctx context.Context, filter Filter) (StockInfoList, error) {
-	apiurl := "https://datacenter.eastmoney.com/stock/selection/api/data/get/"
+	apiurl := "http://datacenter.eastmoney.com/stock/selection/api/data/get/"
 	reqData := map[string]string{
 		"source": "SELECT_SECURITIES",
 		"client": "APP",

@@ -54,7 +54,7 @@ func (h HistoricalPEList) GetMidValue(ctx context.Context) (float64, error) {
 
 // QueryHistoricalPEList 获取历史市盈率
 func (e EastMoney) QueryHistoricalPEList(ctx context.Context, secuCode string) (HistoricalPEList, error) {
-	apiurl := "https://emfront.eastmoney.com/APP_HSF10/CPBD/GZFX"
+	apiurl := "http://emfront.eastmoney.com/APP_HSF10/CPBD/GZFX"
 	params := map[string]string{
 		"code": e.GetFC(secuCode),
 		"year": "4", // 10 年

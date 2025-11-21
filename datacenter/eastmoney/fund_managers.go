@@ -1,5 +1,5 @@
 // 天天基金获取基金经理列表(web接口)
-// https://fund.eastmoney.com/manager/jjjl_all_penavgrowth_desc.html
+// http://fund.eastmoney.com/manager/jjjl_all_penavgrowth_desc.html
 
 package eastmoney
 

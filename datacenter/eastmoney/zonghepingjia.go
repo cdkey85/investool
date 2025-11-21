@@ -54,7 +54,7 @@ type RespZongHePingJia struct {
 // QueryZongHePingJia 返回智能诊股中的综合评价
 func (e EastMoney) QueryZongHePingJia(ctx context.Context, secuCode string) (ZHPJ, error) {
 	fc := e.GetFC(secuCode)
-	apiurl := "https://emstockdiag.eastmoney.com/api//ZhenGuShouYe/GetZongHePingJia"
+	apiurl := "http://emstockdiag.eastmoney.com/api//ZhenGuShouYe/GetZongHePingJia"
 	reqData := map[string]interface{}{
 		"fc": fc,
 	}

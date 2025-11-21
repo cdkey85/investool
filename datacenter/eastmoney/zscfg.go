@@ -40,7 +40,7 @@ type RspZSCFG struct {
 // ZSCFG 返回指数成分股列表
 func (e EastMoney) ZSCFG(ctx context.Context, indexCode string) (results []ZSCFGItem, err error) {
 	apiurl := fmt.Sprintf(
-		"https://fundztapi.eastmoney.com/FundSpecialApiNew/FundSpecialZSB30ZSCFG?IndexCode=%s&Version=6.5.5&deviceid=-&pageIndex=1&pageSize=10000&plat=Iphone&product=EFund",
+		"http://fundztapi.eastmoney.com/FundSpecialApiNew/FundSpecialZSB30ZSCFG?IndexCode=%s&Version=6.5.5&deviceid=-&pageIndex=1&pageSize=10000&plat=Iphone&product=EFund",
 		indexCode,
 	)
 	header := map[string]string{

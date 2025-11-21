@@ -269,7 +269,7 @@ func (e EastMoney) QueryCompanyProfile(ctx context.Context, secuCode string) (Co
 	fc := e.GetFC(secuCode)
 
 	// 基本资料
-	apiurl := "https://emh5.eastmoney.com/api/GongSiGaiKuang/GetJiBenZiLiao"
+	apiurl := "http://emh5.eastmoney.com/api/GongSiGaiKuang/GetJiBenZiLiao"
 	reqData := map[string]interface{}{
 		"fc": fc,
 	}
@@ -302,7 +302,7 @@ func (e EastMoney) QueryCompanyProfile(ctx context.Context, secuCode string) (Co
 	profile.MainBusiness = resp.Result.Jibenziliao.Mainbusiness
 
 	// 操盘必读
-	apiurl = "https://emh5.eastmoney.com/api/CaoPanBiDu/GetCaoPanBiDuPart2Get"
+	apiurl = "http://emh5.eastmoney.com/api/CaoPanBiDu/GetCaoPanBiDuPart2Get"
 	params := map[string]string{
 		"fc": fc,
 	}

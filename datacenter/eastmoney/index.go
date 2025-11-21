@@ -83,7 +83,7 @@ type RspIndex struct {
 // Index 返回指数信息
 func (e EastMoney) Index(ctx context.Context, indexCode string) (data *IndexData, err error) {
 	apiurl := fmt.Sprintf(
-		"https://fundztapi.eastmoney.com/FundSpecialApiNew/FundSpecialZSB30ZSIndex?IndexCode=%s&Version=6.5.5&deviceid=-&pageIndex=1&pageSize=10000&plat=Iphone&product=EFund",
+		"http://fundztapi.eastmoney.com/FundSpecialApiNew/FundSpecialZSB30ZSIndex?IndexCode=%s&Version=6.5.5&deviceid=-&pageIndex=1&pageSize=10000&plat=Iphone&product=EFund",
 		indexCode,
 	)
 	header := map[string]string{

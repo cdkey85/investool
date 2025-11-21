@@ -238,7 +238,7 @@ type RespFinaGincomeData struct {
 
 // QueryFinaGincomeData 获取财务分析利润表数据，最新数据在最前面
 func (e EastMoney) QueryFinaGincomeData(ctx context.Context, secuCode string) (GincomeDataList, error) {
-	apiurl := "https://datacenter.eastmoney.com/securities/api/data/get"
+	apiurl := "http://datacenter.eastmoney.com/securities/api/data/get"
 	params := map[string]string{
 		"source": "HSF10",
 		"client": "APP",

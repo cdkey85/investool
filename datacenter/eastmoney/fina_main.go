@@ -436,7 +436,7 @@ type RespFinaMainData struct {
 
 // QueryHistoricalFinaMainData 获取财报主要指标，最新的在最前面
 func (e EastMoney) QueryHistoricalFinaMainData(ctx context.Context, secuCode string) (HistoricalFinaMainData, error) {
-	apiurl := "https://datacenter.eastmoney.com/securities/api/data/get"
+	apiurl := "http://datacenter.eastmoney.com/securities/api/data/get"
 	params := map[string]string{
 		"filter": fmt.Sprintf(`(SECUCODE="%s")`, strings.ToUpper(secuCode)),
 		"client": "APP",
@@ -500,7 +500,7 @@ type RespFinaPublishDate struct {
 
 // QueryFinaPublishDateList 查询最新财报披露日期
 func (e EastMoney) QueryFinaPublishDateList(ctx context.Context, securityCode string) (FinaPublishDateList, error) {
-	apiurl := "https://datacenter.eastmoney.com/api/data/get"
+	apiurl := "http://datacenter.eastmoney.com/api/data/get"
 	params := map[string]string{
 		"filter": fmt.Sprintf(`(SECURITY_CODE="%s")`, strings.ToUpper(securityCode)),
 		"client": "APP",

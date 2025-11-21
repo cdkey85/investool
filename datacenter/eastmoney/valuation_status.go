@@ -32,7 +32,7 @@ type RespValuation struct {
 func (e EastMoney) QueryValuationStatus(ctx context.Context, secuCode string) (map[string]string, error) {
 	valuations := map[string]string{}
 	secuCode = strings.ToUpper(secuCode)
-	apiurl := "https://datacenter.eastmoney.com/securities/api/data/get"
+	apiurl := "http://datacenter.eastmoney.com/securities/api/data/get"
 	// 市盈率估值
 	params := map[string]string{
 		"type":   "RPT_VALUATIONSTATUS",

@@ -53,7 +53,7 @@ type RespQueryFundByStock struct {
 // QueryFundByStock 根据股票查询基金
 func (e EastMoney) QueryFundByStock(ctx context.Context, stockName, stockCode string) ([]HoldStockFund, error) {
 	apiurl := fmt.Sprintf(
-		"https://fundztapi.eastmoney.com/FundSpecialApiNew/FundSpecialApiGpGetFunds?pageIndex=1&pageSize=10000&isBuy=1&sortName=ZJZBL&sortType=DESC&deviceid=1&version=6.9.9&product=EFund&plat=Iphone&name=%s&code=%s",
+		"http://fundztapi.eastmoney.com/FundSpecialApiNew/FundSpecialApiGpGetFunds?pageIndex=1&pageSize=10000&isBuy=1&sortName=ZJZBL&sortType=DESC&deviceid=1&version=6.9.9&product=EFund&plat=Iphone&name=%s&code=%s",
 		stockName,
 		stockCode,
 	)

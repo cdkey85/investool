@@ -48,7 +48,7 @@ func (o OrgRatingList) String() string {
 
 // QueryOrgRating 获取评级统计
 func (e EastMoney) QueryOrgRating(ctx context.Context, secuCode string) (OrgRatingList, error) {
-	apiurl := "https://datacenter.eastmoney.com/securities/api/data/get"
+	apiurl := "http://datacenter.eastmoney.com/securities/api/data/get"
 	params := map[string]string{
 		"source": "SECURITIES",
 		"client": "APP",

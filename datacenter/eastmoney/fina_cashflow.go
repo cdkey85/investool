@@ -291,7 +291,7 @@ type RespFinaCashflowData struct {
 
 // QueryFinaCashflowData 获取财务分析现金流量表数据，最新数据在最前面
 func (e EastMoney) QueryFinaCashflowData(ctx context.Context, secuCode string) (CashflowDataList, error) {
-	apiurl := "https://datacenter.eastmoney.com/securities/api/data/get"
+	apiurl := "http://datacenter.eastmoney.com/securities/api/data/get"
 	params := map[string]string{
 		"source": "HSF10",
 		"client": "APP",

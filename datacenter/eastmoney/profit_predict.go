@@ -49,7 +49,7 @@ func (p ProfitPredictList) String() string {
 
 // QueryProfitPredict 获取盈利预测
 func (e EastMoney) QueryProfitPredict(ctx context.Context, secuCode string) (ProfitPredictList, error) {
-	apiurl := "https://datacenter.eastmoney.com/securities/api/data/get"
+	apiurl := "http://datacenter.eastmoney.com/securities/api/data/get"
 	params := map[string]string{
 		"source": "SECURITIES",
 		"client": "APP",

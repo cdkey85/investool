@@ -61,7 +61,7 @@ type RespFreeHolders struct {
 
 // QueryFreeHolders 获取前十大流通股东信息
 func (e EastMoney) QueryFreeHolders(ctx context.Context, secuCode string) (FreeHolderList, error) {
-	apiurl := "https://datacenter.eastmoney.com/securities/api/data/v1/get"
+	apiurl := "http://datacenter.eastmoney.com/securities/api/data/v1/get"
 	params := map[string]string{
 		"reportName": "RPT_F10_EH_FREEHOLDERS",
 		"columns":    "END_DATE,HOLDER_NAME,HOLDER_CODE,HOLD_NUM,FREE_HOLDNUM_RATIO,FREE_RATIO_QOQ,IS_HOLDORG,HOLDER_RANK",
