@@ -114,7 +114,7 @@ type RespJiaZhiPingGu struct {
 // QueryJiaZhiPingGu 返回智能诊股中的价值评估
 func (e EastMoney) QueryJiaZhiPingGu(ctx context.Context, secuCode string) (JZPG, error) {
 	fc := e.GetFC(secuCode)
-	apiurl := "http://emstockdiag.eastmoney.com/api/ZhenGuShouYe/GetJiaZhiPingGu"
+	apiurl := "https://emstockdiag.eastmoney.com/api/ZhenGuShouYe/GetJiaZhiPingGu"
 	reqData := map[string]interface{}{
 		"fc": fc,
 	}
