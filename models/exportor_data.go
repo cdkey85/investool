@@ -90,8 +90,10 @@ type ExportorData struct {
 	ListingYieldYear float64 `json:"listing_yield_year"        csv:"上市以来年化收益率 (%)"`
 	// 上市以来年化波动率 (%)
 	ListingVolatilityYear float64 `json:"listing_volatility_year"   csv:"年化波动率 (%)"`
-	// 市盈率
-	PE float64 `json:"pe"                        csv:"市盈率"`
+	// 滚动市盈率
+	PE float64 `json:"pe"                        csv:"滚动市盈率"`
+	// 动态市盈率
+	DTSYL float64 `json:"dtsyl"                  csv:"动态市盈率"`
 	// PEG
 	PEG float64 `json:"peg"                       csv:"PEG"`
 	// 机构评级
@@ -224,6 +226,7 @@ func NewExportorData(ctx context.Context, stock Stock) ExportorData {
 		IncomeGrowthrate3Y:     stock.BaseInfo.IncomeGrowthrate3Y,
 		ListingYieldYear:       stock.BaseInfo.ListingYieldYear,
 		PE:                     stock.BaseInfo.PE,
+		DTSYL:                  stock.BaseInfo.DTSYL,
 		PEG:                    stock.PEG,
 		OrgRating:              stock.OrgRatingList.String(),
 		ProfitPredict:          stock.ProfitPredictList.String(),
@@ -303,7 +306,8 @@ func (d ExportorDataList) GetColumnInfos() []ColumnInfo {
 		{Key: "income_growthrate_3_y", Title: "营收3年复合增长率", DefaultShow: false},
 		{Key: "listing_yield_year", Title: "上市以来年化收益率", DefaultShow: false},
 		{Key: "listing_volatility_year", Title: "年化波动率", DefaultShow: false},
-		{Key: "pe", Title: "市盈率", DefaultShow: true},
+		{Key: "pe", Title: "滚动市盈率", DefaultShow: true},
+		{Key: "dtsyl", Title: "动态市盈率", DefaultShow: true},
 		{Key: "peg", Title: "PEG", DefaultShow: false},
 		{Key: "org_rating", Title: "机构评级", DefaultShow: false},
 		{Key: "profit_predict", Title: "盈利预测", DefaultShow: false},
