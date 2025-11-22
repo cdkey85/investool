@@ -52,7 +52,8 @@ func (h HistoricalPEList) GetMidValue(ctx context.Context) (float64, error) {
 	return goutils.MidValueFloat64(values)
 }
 
-// QueryHistoricalPEList 获取历史市盈率
+// QueryHistoricalPEList 获取历史市盈率，服务器会返回400错误，多试几次有可能会成功
+// 这里可以查看历史PE，https://eniu.com/gu/sz399300
 func (e EastMoney) QueryHistoricalPEList(ctx context.Context, secuCode string) (HistoricalPEList, error) {
 	apiurl := "http://emfront.eastmoney.com/APP_HSF10/CPBD/GZFX"
 	params := map[string]string{
