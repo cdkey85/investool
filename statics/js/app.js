@@ -63,213 +63,131 @@ $(document).ready(function () {
           $("#load_modal").modal("close");
           return;
         }
+        
+        // 初始化列信息
+        if (data.Columns && data.Columns.length > 0) {
+          // 清空现有的下拉选项
+          $(".dropdown-content").empty();
+          
+          // 先销毁已存在的 dropdown 实例（如果存在）
+          $(".dropdown-trigger").dropdown('destroy');
+          
+          // 重新生成下拉选项
+          $.each(data.Columns, function (i, column) {
+            var checkboxId = "sf_" + (i + 1);
+            var classId = "st_" + (i + 1);
+            var columnIndex = i + 1;
+            
+            // 添加下拉选项
+            $(".dropdown-content").append(
+              '<li><label><input id="' + checkboxId + '" type="checkbox" data-column-index="' + columnIndex + '" /><span>' + column.title + '</span></label></li>'
+            );
+          });
+          
+          // 重新初始化 dropdown 组件
+          $(".dropdown-trigger").dropdown({
+            constrainWidth: true,
+            closeOnClick: false,
+          });
+          
+          // 在下拉框组件初始化后再绑定事件和设置默认选中状态，确保元素已经正确渲染
+          setTimeout(function() {
+            $.each(data.Columns, function (i, column) {
+              var checkboxId = "sf_" + (i + 1);
+              var classId = "st_" + (i + 1);
+              var columnIndex = i + 1;
+              
+              // 绑定事件 - 使用事件委托确保动态元素能正确绑定事件
+              $("#" + checkboxId).off('change').on('change', function () {
+                var columnIndex = $(this).data("column-index");
+                // 根据复选框状态切换对应列的显示/隐藏
+                if (this.checked) {
+                  $("." + classId).removeClass("hide");
+                  $("#selector_result thead th:nth-child(" + columnIndex + ")").removeClass("hide");
+                  $("#selector_result tbody tr").each(function() {
+                    $(this).find("td:nth-child(" + columnIndex + ")").removeClass("hide");
+                  });
+                } else {
+                  $("." + classId).addClass("hide");
+                  $("#selector_result thead th:nth-child(" + columnIndex + ")").addClass("hide");
+                  $("#selector_result tbody tr").each(function() {
+                    $(this).find("td:nth-child(" + columnIndex + ")").addClass("hide");
+                  });
+                }
+              });
+              
+              // 设置默认选中状态
+              if (column.default_show) {
+                // 使用多种方法确保复选框被正确选中
+                $("#" + checkboxId)[0].checked = true;
+                $("#" + checkboxId).prop("checked", true);
+                $("#" + checkboxId).attr("checked", "checked");
+                
+                // 强制更新Materialize CSS下拉框的视觉状态
+                setTimeout(function() {
+                  $("#" + checkboxId).trigger('change');
+                }, 50);
+              }
+            });
+          }, 100);
+        }
+        
         if (data.Stocks.length == 0) {
           $(".dropdown-structure").addClass("hide");
           $("#selector_result #result_table").html(
             '<div class="row"><p class="center flow-text">无法找到符合条件的股票</p></div>'
           );
         } else {
+          // 清空现有的表头
+          $("#selector_result thead tr").empty();
+          
+          // 重新生成表头
+          if (data.Columns && data.Columns.length > 0) {
+            $.each(data.Columns, function (i, column) {
+              var classId = "st_" + (i + 1);
+              // 根据default_show决定是否添加hide类
+              var thClass = column.default_show ? "" : "hide " + classId;
+              $("#selector_result thead tr").append('<th class="' + thClass + '">' + column.title + '</th>');
+            });
+          }
+          
+          // 清空现有的表格内容
+          $("#selector_result tbody").empty();
+          
+          // 生成表格内容
           $.each(data.Stocks, function (i, stock) {
             var cm = stock.code.split(".");
             if (stock.right_price != "--") {
               stock.right_price = stock.right_price.toFixed(2);
             }
-            $("#selector_result tbody").append(
-              "<tr>" +
-                '<td><span class="copybtn waves-effect waves-red" data-clipboard-text="' +
-                cm[0] +
-                '">' +
-                cm[0] +
-                //     '<i class="material-icons tiny">content_copy</i></span></td>' +
-                '<td><a target="_blank" href="http://quote.eastmoney.com/' +
-                cm[1] +
-                cm[0] +
-                '.html">' +
-                stock.name +
-                "</a></td>" +
-                '<td class="hide st_1">' +
-                stock.industry +
-                "</td>" +
-                '<td class="hide st_2">' +
-                stock.keywords +
-                "</td>" +
-                '<td class="hide st_3">' +
-                stock.company_profile +
-                "</td>" +
-                '<td class="hide st_4">' +
-                stock.main_forms +
-                "</td>" +
-                '<td class="hide st_5">' +
-                (stock.byys_ration * 100).toFixed(2) +
-                "%" +
-                "</td>" +
-                '<td class="hide st_6">' +
-                stock.report_date_name +
-                "</td>" +
-                '<td class="hide st_7">' +
-                stock.report_opinion +
-                "</td>" +
-                '<td class="hide st_8">' +
-                stock.jzpg +
-                "</td>" +
-                '<td class="hide st_9">' +
-                stock.latest_roe +
-                "%" +
-                "</td>" +
-                '<td class="hide st_55">' +
-                stock.latest_fina_roe +
-                "%" +
-                "</td>" +
-                '<td class="hide st_10">' +
-                stock.roe_tbzz.toFixed(2) +
-                "%" +
-                "</td>" +
-                '<td class="hide st_11">' +
-                human_float_slice(stock.roe_5y, "%") +
-                "</td>" +
-                '<td class="hide st_12">' +
-                stock.latest_eps +
-                "</td>" +
-                '<td class="hide st_13">' +
-                stock.eps_tbzz.toFixed(2) +
-                "%" +
-                "</td>" +
-                '<td class="hide st_14">' +
-                human_float_slice(stock.eps_5y, "") +
-                "</td>" +
-                '<td class="hide st_15">' +
-                stock.total_income +
-                "</td>" +
-                '<td class="hide st_16">' +
-                stock.total_income_tbzz.toFixed(2) +
-                "%" +
-                "</td>" +
-                '<td class="hide st_17">' +
-                human_float_slice(stock.total_income_5y, "元") +
-                "</td>" +
-                '<td class="hide st_18">' +
-                stock.net_profit +
-                "</td>" +
-                '<td class="hide st_19">' +
-                stock.net_profit_tbzz.toFixed(2) +
-                "%" +
-                "</td>" +
-                '<td class="hide st_20">' +
-                human_float_slice(stock.net_profit_5y, "元") +
-                "</td>" +
-                '<td class="hide st_21">' +
-                stock.zxgxl.toFixed(2) +
-                "%" +
-                "</td>" +
-                '<td class="hide st_22">' +
-                stock.fina_report_date +
-                "</td>" +
-                '<td class="hide st_23">' +
-                stock.fina_appoint_publish_date +
-                "</td>" +
-                '<td class="hide st_24">' +
-                stock.fina_actual_publish_date +
-                "</td>" +
-                '<td class="hide st_25">' +
-                stock.total_market_cap +
-                "</td>" +
-                '<td class="hide st_26">' +
-                stock.price +
-                "元" +
-                "</td>" +
-                '<td class="hide st_27">' +
-                stock.right_price +
-                "元" +
-                "</td>" +
-                '<td class="hide st_28">' +
-                stock.price_space +
-                "</td>" +
-                '<td class="hide st_29">' +
-                (stock.hv * 100).toFixed(2) +
-                "%" +
-                "</td>" +
-                '<td class="hide st_30">' +
-                stock.zxfzl.toFixed(2) +
-                "%" +
-                "</td>" +
-                '<td class="hide st_31">' +
-                stock.fzldb.toFixed(2) +
-                "</td>" +
-                '<td class="hide st_32">' +
-                stock.netprofit_growthrate_3_y.toFixed(2) +
-                "%" +
-                "</td>" +
-                '<td class="hide st_33">' +
-                stock.income_growthrate_3_y.toFixed(2) +
-                "%" +
-                "</td>" +
-                '<td class="hide st_34">' +
-                stock.listing_yield_year.toFixed(2) +
-                "%" +
-                "</td>" +
-                '<td class="hide st_35">' +
-                stock.listing_volatility_year.toFixed(2) +
-                "%" +
-                "</td>" +
-                '<td class="hide st_36">' +
-                stock.pe.toFixed(2) +
-                "</td>" +
-                '<td class="hide st_37">' +
-                stock.peg.toFixed(2) +
-                "</td>" +
-                '<td class="hide st_38">' +
-                stock.org_rating +
-                "</td>" +
-                '<td class="hide st_39">' +
-                stock.profit_predict +
-                "</td>" +
-                '<td class="hide st_40">' +
-                stock.valuation_syl +
-                "</td>" +
-                '<td class="hide st_41">' +
-                stock.valuation_sjl +
-                "</td>" +
-                '<td class="hide st_42">' +
-                stock.valuation_sxol +
-                "</td>" +
-                '<td class="hide st_43">' +
-                stock.valuation_sxnl +
-                "</td>" +
-                '<td class="hide st_44">' +
-                stock.hyjzsp +
-                "</td>" +
-                '<td class="hide st_45">' +
-                stock.ztzd +
-                "</td>" +
-                '<td class="hide st_46">' +
-                human_float_slice(stock.mll_5y, "%") +
-                "</td>" +
-                '<td class="hide st_47">' +
-                human_float_slice(stock.jll_5y, "%") +
-                "</td>" +
-                '<td class="hide st_48">' +
-                stock.listing_date +
-                "</td>" +
-                '<td class="hide st_49">' +
-                stock.netcash_operate +
-                "</td>" +
-                '<td class="hide st_50">' +
-                stock.netcash_invest +
-                "</td>" +
-                '<td class="hide st_51">' +
-                stock.netcash_finance +
-                "</td>" +
-                '<td class="hide st_52">' +
-                stock.netcash_free +
-                "</td>" +
-                '<td class="hide st_53">' +
-                stock.free_holders_top_10 +
-                "</td>" +
-                '<td class="hide st_54">' +
-                stock.main_money_net_inflows +
-                "</td>" +
-                "</tr>"
-            );
+            
+            var row = "<tr>";
+            
+            // 根据列信息生成表格行
+            if (data.Columns && data.Columns.length > 0) {
+              $.each(data.Columns, function (j, column) {
+                var classId = "st_" + (j + 1);
+                // 根据default_show决定是否添加hide类
+                var tdClass = column.default_show ? "" : "hide " + classId;
+                var value = stock[column.key];
+                
+                // 特殊处理某些字段
+                if (column.key === "code") {
+                  row += '<td class="' + tdClass + '"><span class="copybtn waves-effect waves-red" data-clipboard-text="' + cm[0] + '">' + cm[0] + '</span></td>';
+                } else if (column.key === "name") {
+                  row += '<td class="' + tdClass + '"><a target="_blank" href="http://quote.eastmoney.com/' + cm[1] + cm[0] + '.html">' + stock.name + "</a></td>";
+                } else if (column.key === "roe_5y" || column.key == "eps_5y" || column.key === "mll_5y" || column.key === "jll_5y") {
+                  row += '<td class="' + tdClass + '">' + human_float_slice(value, "") + "</td>";
+                } else if (typeof value === 'number') {
+                  row += '<td class="' + tdClass + '">' + value.toFixed(2) + "</td>";
+                } else {
+                  row += '<td class="' + tdClass + '">' + value + "</td>";
+                }
+              });
+            }
+            
+            row += "</tr>";
+            $("#selector_result tbody").append(row);
           });
         }
         $("title").text(data.PageTitle);
@@ -499,19 +417,6 @@ $(document).ready(function () {
     }
   });
 
-  // 展示字段设置
-  var checkboxLimit = 10;
-  var checkboxCountCheck = function () {
-    var checkedCount = $(".dropdown-content input[type=checkbox]:checked")
-      .length;
-    if (checkedCount > checkboxLimit && checkedCount % 5 == 1) {
-      M.toast({
-        html: "展示信息过多，导出CSV详情文件即可在本地查看完整信息哦~",
-        classes: "rounded",
-      });
-    }
-  };
-
   // 下拉框设置
   $(".dropdown-trigger").dropdown({
     constrainWidth: true,
@@ -520,13 +425,6 @@ $(document).ready(function () {
   $(".dropdown-content>li>a").css("color", "#000000");
   $(".dropdown-content>li>a").css("font-size", "11px");
   $(".dropdown-content>li>a").css("font-weight", "normal");
-
-  for (let i = 1; i <= 55; i++) {
-    $(`#sf_${i}`).change(function () {
-      checkboxCountCheck();
-      $(`.st_${i}`).toggleClass("hide");
-    });
-  }
 
   // 点击复制
   var clipboard = new ClipboardJS(".copybtn");

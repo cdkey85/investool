@@ -47,7 +47,8 @@ func StockSelector(c *gin.Context) {
 		"Version":   version.Version,
 		"PageTitle": "InvesTool | 股票 | 基本面筛选",
 		"Error":     "",
-		"Stocks":    models.StockList{},
+		"Stocks":    models.ExportorDataList{},
+		"Columns":   []models.ColumnInfo{}, // 添加列信息
 	}
 
 	param := ParamStockSelector{}
@@ -74,6 +75,7 @@ func StockSelector(c *gin.Context) {
 		dlist = append(dlist, models.NewExportorData(c, s))
 	}
 	data["Stocks"] = dlist
+	data["Columns"] = dlist.GetColumnInfos() // 设置列信息
 	c.JSON(http.StatusOK, data)
 	return
 }

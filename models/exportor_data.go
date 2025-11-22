@@ -254,6 +254,79 @@ func NewExportorData(ctx context.Context, stock Stock) ExportorData {
 // ExportorDataList 要导出的数据列表
 type ExportorDataList []ExportorData
 
+// ColumnInfo 表示列信息
+type ColumnInfo struct {
+	Key         string `json:"key"`
+	Title       string `json:"title"`
+	DefaultShow bool   `json:"default_show"`
+}
+
+// GetColumnInfos 获取列信息
+func (d ExportorDataList) GetColumnInfos() []ColumnInfo {
+	// 定义列信息，包括列名、显示名称和是否默认显示
+	columnInfos := []ColumnInfo{
+		{Key: "code", Title: "股票代码", DefaultShow: true},
+		{Key: "name", Title: "股票名", DefaultShow: true},
+		{Key: "industry", Title: "所属行业", DefaultShow: true},
+		{Key: "keywords", Title: "题材关键词", DefaultShow: false},
+		{Key: "company_profile", Title: "公司信息", DefaultShow: false},
+		{Key: "main_forms", Title: "主营构成", DefaultShow: false},
+		{Key: "byys_ration", Title: "本业营收比", DefaultShow: false},
+		{Key: "report_date_name", Title: "数据源", DefaultShow: false},
+		{Key: "report_opinion", Title: "财报审计意见", DefaultShow: false},
+		{Key: "jzpg", Title: "价值评估", DefaultShow: false},
+		{Key: "latest_roe", Title: "当前ROE", DefaultShow: true},
+		{Key: "latest_fina_roe", Title: "最近财报ROE", DefaultShow: false},
+		{Key: "roe_tbzz", Title: "ROE同比增长", DefaultShow: false},
+		{Key: "roe_5y", Title: "近五年ROE", DefaultShow: false},
+		{Key: "latest_eps", Title: "最新一期EPS", DefaultShow: false},
+		{Key: "eps_tbzz", Title: "EPS同比增长", DefaultShow: false},
+		{Key: "eps_5y", Title: "近五年EPS", DefaultShow: false},
+		{Key: "total_income", Title: "营业总收入", DefaultShow: true},
+		{Key: "total_income_tbzz", Title: "营业总收入同比增长", DefaultShow: true},
+		{Key: "total_income_5y", Title: "近五年营收", DefaultShow: false},
+		{Key: "net_profit", Title: "归属净利润", DefaultShow: true},
+		{Key: "net_profit_tbzz", Title: "归属净利润同比增长", DefaultShow: true},
+		{Key: "net_profit_5y", Title: "近五年净利润", DefaultShow: false},
+		{Key: "zxgxl", Title: "最新股息率", DefaultShow: false},
+		{Key: "fina_report_date", Title: "财报披露日期", DefaultShow: false},
+		{Key: "fina_appoint_publish_date", Title: "预约财报披露日期", DefaultShow: false},
+		{Key: "fina_actual_publish_date", Title: "实际财报披露日期", DefaultShow: false},
+		{Key: "total_market_cap", Title: "总市值", DefaultShow: true},
+		{Key: "price", Title: "价格", DefaultShow: false},
+		{Key: "right_price", Title: "估算合理价格", DefaultShow: false},
+		{Key: "price_space", Title: "合理价差", DefaultShow: false},
+		{Key: "hv", Title: "历史波动率", DefaultShow: false},
+		{Key: "zxfzl", Title: "最新负债率", DefaultShow: false},
+		{Key: "fzldb", Title: "负债流动比", DefaultShow: false},
+		{Key: "netprofit_growthrate_3_y", Title: "净利润3年复合增长率", DefaultShow: false},
+		{Key: "income_growthrate_3_y", Title: "营收3年复合增长率", DefaultShow: false},
+		{Key: "listing_yield_year", Title: "上市以来年化收益率", DefaultShow: false},
+		{Key: "listing_volatility_year", Title: "年化波动率", DefaultShow: false},
+		{Key: "pe", Title: "市盈率", DefaultShow: true},
+		{Key: "peg", Title: "PEG", DefaultShow: false},
+		{Key: "org_rating", Title: "机构评级", DefaultShow: false},
+		{Key: "profit_predict", Title: "盈利预测", DefaultShow: false},
+		{Key: "valuation_syl", Title: "市盈率估值", DefaultShow: false},
+		{Key: "valuation_sjl", Title: "市净率估值", DefaultShow: false},
+		{Key: "valuation_sxol", Title: "市销率估值", DefaultShow: false},
+		{Key: "valuation_sxnl", Title: "市现率估值", DefaultShow: false},
+		{Key: "hyjzsp", Title: "行业均值水平", DefaultShow: false},
+		{Key: "ztzd", Title: "整体质地", DefaultShow: false},
+		{Key: "mll_5y", Title: "近五年毛利率", DefaultShow: false},
+		{Key: "jll_5y", Title: "近五年净利率", DefaultShow: false},
+		{Key: "listing_date", Title: "上市时间", DefaultShow: false},
+		{Key: "netcash_operate", Title: "经营现金流净额", DefaultShow: false},
+		{Key: "netcash_invest", Title: "投资现金流净额", DefaultShow: false},
+		{Key: "netcash_finance", Title: "筹资现金流净额", DefaultShow: false},
+		{Key: "netcash_free", Title: "自由现金流", DefaultShow: false},
+		{Key: "free_holders_top_10", Title: "十大流通股东", DefaultShow: false},
+		{Key: "main_money_net_inflows", Title: "主力资金净流入", DefaultShow: false},
+	}
+
+	return columnInfos
+}
+
 // SortByROE 股票列表按 ROE 排序
 func (d ExportorDataList) SortByROE() {
 	sort.Slice(d, func(i, j int) bool {
