@@ -31,3 +31,4 @@ eastmoney_py/
 plantuml_diagrams/
 *.py
 *.pyc
+*__debug_*
