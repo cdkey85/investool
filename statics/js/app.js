@@ -23,7 +23,7 @@ $(document).ready(function () {
 
   // 筛选表单中开关显示检测表单
   $("#selector_with_checker").click(function () {
-    $("#checker_options").toggle();
+    $("#checker_options").toggleClass("hide");
   });
 
   var human_float_slice = function (floats, unit) {
