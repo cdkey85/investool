@@ -33,12 +33,12 @@ $(document).ready(function () {
       if (unit == "元") {
         var yi = n / 100000000.0;
         if (Math.abs(yi) >= 1) {
-          result += yi.toFixed(2) + "亿元<br/>";
+          result += yi.toFixed(2) + "亿元<br/>\r\n";
         } else if (n / 10000.0 >= 1) {
-          result += yi.toFixed(2) + "万元<br/>";
+          result += yi.toFixed(2) + "万元<br/>\r\n";
         }
       } else {
-        result += n.toFixed(2) + unit + "<br/>";
+        result += n.toFixed(2) + unit + "<br/>\r\n";
       }
     }
     return result;
@@ -176,7 +176,7 @@ $(document).ready(function () {
                   row += '<td class="' + tdClass + '"><span class="copybtn waves-effect waves-red" data-clipboard-text="' + cm[0] + '">' + cm[0] + '</span></td>';
                 } else if (column.key === "name") {
                   row += '<td class="' + tdClass + '"><a target="_blank" href="http://quote.eastmoney.com/' + cm[1] + cm[0] + '.html">' + stock.name + "</a></td>";
-                } else if (column.key === "roe_5y" || column.key == "eps_5y" || column.key === "mll_5y" || column.key === "jll_5y") {
+                } else if (column.key === "roe_5y" || column.key == "eps_5y" || column.key === "mll_5y" || column.key === "jll_5y" || column.key === "total_income_5y" || column.key === "net_profit_5y") {
                   row += '<td class="' + tdClass + '">' + human_float_slice(value, "") + "</td>";
                 } else if (typeof value === 'number') {
                   row += '<td class="' + tdClass + '">' + value.toFixed(2) + "</td>";
