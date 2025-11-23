@@ -16,8 +16,20 @@
         <title>{{ .PageTitle }}</title>
     </head>
 
-
     <body>
+        <header>
+            <nav>
+                <div class="nav-wrapper">
+                    <a href="{{ .HostURL }}/" class="brand-logo"><i class="material-icons">local_atm</i>InvesTool</a>
+                    <a href="#" data-target="mobile-sidenav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+                    <ul class="right hide-on-med-and-down">
+                        <li id="nav-stock"><a href="{{ .HostURL }}/"><i class="material-icons left">trending_up</i><strong>股票</strong></a></li>
+                        <li id="nav-comment"><a href="{{ .HostURL }}/comment"><i class="material-icons left">chat_bubble_outline</i><strong>感悟</strong></a></li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
         <main class="container">
             {{ if .Error }}
             <div class="row">

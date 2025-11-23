@@ -1,59 +1,177 @@
 {{ template "header" . }}
 <div class="row">
-    <h1 class="center">留言评论</h1>
+    <h1 class="center">感悟记录</h1>
     <div class="divider"></div>
+
+    <!-- 筛选表单 
     <div class="section">
-        <blockquote>愿您如K线记录股价般凡走过必留下痕迹，欢迎留下您的建议与评论</blockquote>
+        <div class="row">
+            <form id="filterForm" class="col s12">
+                <div class="row">
+                    <div class="input-field col s6">
+                        <select id="stockCodeFilter" name="stock_code">
+                            <option value="" selected>所有股票</option>
+                            {{ range .StockCodes }}
+                            <option value="{{ . }}" {{ if eq $.StockCode . }}selected{{ end }}>{{ . }}</option>
+                            {{ end }}
+                        </select>
+                        <label>按股票代码筛选</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <button class="btn waves-effect waves-light" type="submit">筛选</button>
+                        <button class="btn waves-effect waves-light" type="button" id="resetFilter">重置</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>-->
+
+    <!-- 留言表单 -->
+    <div class="section">
+        <div class="row">
+            <form id="commentForm" class="col s12">
+                <div class="row">
+                    <div class="input-field col s6">
+                        <input id="stock_code" name="stock_code" type="text" class="validate">
+                        <label for="stock_code">股票代码（可选）</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input id="stock_name" name="stock_name" type="text" class="validate">
+                        <label for="stock_name">股票名称（可选）</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <textarea id="content" name="content" class="materialize-textarea validate" required></textarea>
+                        <label for="content">留言内容</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12">
+                        <button class="btn waves-effect waves-light right" type="submit">提交留言
+                            <i class="material-icons right">send</i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 
+    <!-- 留言列表 -->
     <div class="section">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3022214826355647"
-            crossorigin="anonymous"></script>
-        <ins class="adsbygoogle"
-            style="display:block"
-            data-ad-format="fluid"
-            data-ad-layout-key="-fb+5w+4e-db+86"
-            data-ad-client="ca-pub-3022214826355647"
-            data-ad-slot="7182264173"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
+        <h5>留言列表 (共 {{ .Total }} 条)</h5>
+        <div id="commentsList">
+            {{ range .Comments }}
+            <div class="card-panel hoverable">
+                <div class="row">
+                    <div class="col s12">
+                        <span class="blue-text text-darken-2">
+                            {{ if .StockCode }}
+                                <strong><a href="/comment?stock_code={{ .StockCode }}">{{ .StockCode }} {{ .StockName }}</a></strong>
+                            {{ else }}
+                                <strong>随笔</strong>
+                            {{ end }}
+                        </span>
+                        <span class="right grey-text text-darken-1">
+                            {{ .CreatedAt.Format "2006-01-02 15:04:05" }}
+                        </span>
+                    </div>
+                    <div class="col s12">
+                        <p>{{ .Content }}</p>
+                    </div>
+                </div>
+            </div>
+            {{ else }}
+            <div class="card-panel teal lighten-4">
+                <span class="white-text">暂无留言</span>
+            </div>
+            {{ end }}
+        </div>
 
-    <div class="section">
-        <div id="SOHUCS" ></div>
-        <script type="text/javascript">
-        (function(){
-            var appid = 'cyvvYY6Jf';
-            var conf = 'prod_a2c3a8e1de728b20733e7f90936f00ff';
-            var width = window.innerWidth || document.documentElement.clientWidth;
-            if (width < 1000) {
-                var head = document.getElementsByTagName('head')[0]||document.head||document.documentElement;
-                var script = document.createElement('script');
-                script.type = 'text/javascript';
-                script.charset = 'utf-8';
-                script.id = 'changyan_mobile_js';
-                script.src = 'https://cy-cdn.kuaizhan.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf;
-                head.appendChild(script);
-            } else {
-                var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://cy-cdn.kuaizhan.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})});
-            }
-        })();
-        </script>
-    </div>
+        <!-- 分页 -->
+        {{ if gt .TotalPages 1 }}
+        <div class="center">
+            <ul class="pagination">
+                {{ if gt .Page 1 }}
+                <li class="waves-effect"><a href="?page={{ sub .Page 1 }}{{ if .StockCode }}&stock_code={{ .StockCode }}{{ end }}"><i class="material-icons">chevron_left</i></a></li>
+                {{ else }}
+                <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+                {{ end }}
 
-    <div class="section">
-        <div id="cyReward" role="cylabs" data-use="reward"></div>
-        <script type="text/javascript" charset="utf-8" src="https://cy-cdn.kuaizhan.com/js/??lib/jquery.js,changyan.labs.https.js?appid=cyvvYY6Jf"></script>
-    </div>
+                {{ range $i := untilStep 1 (add .TotalPages 1) 1 }}
+                {{ if eq $i $.Page }}
+                <li class="active"><a href="#!">{{ $i }}</a></li>
+                {{ else }}
+                <li class="waves-effect"><a href="?page={{ $i }}{{ if $.StockCode }}&stock_code={{ $.StockCode }}{{ end }}">{{ $i }}</a></li>
+                {{ end }}
+                {{ end }}
 
-    <div class="_5bls6lgzdr"></div>
-    <script type="text/javascript">
-        (window.slotbydup = window.slotbydup || []).push({
-            id: "u6682249",
-            container: "_5bls6lgzdr",
-            async: true
-        });
-    </script>
+                {{ if lt .Page .TotalPages }}
+                <li class="waves-effect"><a href="?page={{ add .Page 1 }}{{ if .StockCode }}&stock_code={{ .StockCode }}{{ end }}"><i class="material-icons">chevron_right</i></a></li>
+                {{ else }}
+                <li class="disabled"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+                {{ end }}
+            </ul>
+        </div>
+        {{ end }}
+    </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 初始化 Materialize 组件
+        M.AutoInit();
+
+        // 留言表单提交
+        document.getElementById('commentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const data = {};
+            formData.forEach((value, key) => {
+                data[key] = value;
+            });
+
+            fetch('/comment', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    M.toast({html: '提交失败: ' + data.error, classes: 'red'});
+                } else {
+                    M.toast({html: '留言提交成功！', classes: 'green'});
+                    // 重置表单
+                    document.getElementById('commentForm').reset();
+                    // 重新加载页面以显示新留言
+                    location.reload();
+                }
+            })
+            .catch(error => {
+                M.toast({html: '提交失败: ' + error, classes: 'red'});
+            });
+        });
+
+        // 筛选表单提交
+        document.getElementById('filterForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const stockCode = document.getElementById('stockCodeFilter').value;
+            let url = '/comment?page=1';
+            if (stockCode) {
+                url += '&stock_code=' + encodeURIComponent(stockCode);
+            }
+            window.location.href = url;
+        });
+
+        // 重置筛选
+        document.getElementById('resetFilter').addEventListener('click', function() {
+            window.location.href = '/comment';
+        });
+    });
+</script>
+
 {{ template "footer" . }}

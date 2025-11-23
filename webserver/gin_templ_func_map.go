@@ -56,4 +56,16 @@ var TemplFuncs = template.FuncMap{
 	"IsStrInSlice":      goutils.IsStrInSlice,
 	"YiWanString":       goutils.YiWanString,
 	"mod":               func(i, j int) bool { return i%j == 0 },
+	"add":               func(a, b int) int { return a + b },
+	"sub":               func(a, b int) int { return a - b },
+	"untilStep":         untilStep,
+}
+
+// untilStep 返回从 start 到 stop 的整数切片，步长为 step
+func untilStep(start, stop, step int) []int {
+	var result []int
+	for i := start; i < stop; i += step {
+		result = append(result, i)
+	}
+	return result
 }

@@ -12,6 +12,7 @@ import (
 	"time"
 
 	"github.com/axiaoxin-com/goutils"
+	"github.com/axiaoxin-com/investool/db"
 	"github.com/axiaoxin-com/logging"
 	"github.com/fsnotify/fsnotify"
 	"github.com/gin-gonic/gin"
@@ -59,6 +60,9 @@ func InitWithConfigFile(configFile string) {
 
 	// 打印viper配置
 	logging.Infof(nil, "viper load all settings:%v", viper.AllSettings())
+
+	// 初始化数据库
+	db.InitDB()
 
 	// 初始化 sentry 并创建 sentry 客户端
 	sentryDSN := viper.GetString("sentry.dsn")
