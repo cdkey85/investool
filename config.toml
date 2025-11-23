@@ -59,11 +59,11 @@ env = "localhost"
 ########## 日志相关配置
 [logging]
     # 日志级别，可选值： debug info warn error dpanic panic fatal
-    level = "info"
+    level = "error"
     # 日志格式，可选值： json console
     format = "json"
     # 日志输出路径： stdout, stderr, logrotate:///path/to/logfile
-    output_paths = ["stdout"]
+    output_paths = ["logrotate://./logs/investool.log"]
     # 是否关闭打印 caller 字段
     disable_caller = false
     # 是否关闭打印 stacktrace 字段
@@ -128,7 +128,7 @@ env = "localhost"
     # 文档描述
     desc = "Using investool to develop gin app on fly."
     # 请求地址，端口要和 server.addr 一致，浏览器访问时需要区分 127.0.0.1 和 localhost
-    host = "localhost:4869"
+    host = "localhost:80"
     # 请求地址的 basepath
     basepath = "/"
     # 支持的请求 schemes

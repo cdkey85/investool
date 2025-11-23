@@ -11,49 +11,32 @@ import (
 	"github.com/axiaoxin-com/investool/version"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
-	"gorm.io/gorm"
 )
 
 // Comment godoc
 func Comment(c *gin.Context) {
 	// 获取分页参数
 	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
-	perPage := 2
-	offset := (page - 1) * perPage
+	perPage := 100
 
 	// 获取筛选参数
 	stockCode := c.Query("stock_code")
 
-	// 构建查询条件
-	var comments []models.Comment
-	query := db.DB.Order("created_at DESC").Offset(offset).Limit(perPage)
-
-	// 如果提供了股票代码筛选条件
-	if stockCode != "" {
-		query = query.Where("stock_code = ?", stockCode)
-	}
-
-	// 执行查询
-	result := query.Find(&comments)
-	if result.Error != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch comments"})
+	// 从CSV文件获取评论数据
+	comments, total, err := db.GetAllComments(page, perPage, stockCode)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch comments: " + err.Error()})
 		return
 	}
-
-	// 获取总记录数
-	var total int64
-	countQuery := db.DB.Model(&models.Comment{})
-	if stockCode != "" {
-		countQuery = countQuery.Where("stock_code = ?", stockCode)
-	}
-	countQuery.Count(&total)
 
 	// 计算总页数
 	totalPages := int((total + int64(perPage) - 1) / int64(perPage))
 
 	// 获取所有不同的股票代码用于筛选下拉框
-	var stockCodes []string
-	db.DB.Model(&models.Comment{}).Distinct("stock_code").Where("stock_code != ?", "").Pluck("stock_code", &stockCodes)
+	stockCodes, err := db.GetDistinctStockCodes()
+	if err != nil {
+		stockCodes = []string{} // 如果出错，返回空数组而不是失败
+	}
 
 	data := gin.H{
 		"Env":        viper.GetString("env"),
@@ -80,10 +63,10 @@ func AddComment(c *gin.Context) {
 		return
 	}
 
-	// 保存到数据库
-	result := db.DB.Create(&comment)
-	if result.Error != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save comment"})
+	// 保存到CSV文件
+	err := db.CreateComment(&comment)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save comment: " + err.Error()})
 		return
 	}
 
@@ -92,20 +75,16 @@ func AddComment(c *gin.Context) {
 
 // DeleteComment 删除留言
 func DeleteComment(c *gin.Context) {
-	id := c.Param("id")
-
-	result := db.DB.Delete(&models.Comment{}, id)
-	if result.Error != nil {
-		if result.Error == gorm.ErrRecordNotFound {
-			c.JSON(http.StatusNotFound, gin.H{"error": "Comment not found"})
-		} else {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to delete comment"})
-		}
+	idStr := c.Param("id")
+	id, err := strconv.ParseInt(idStr, 10, 64)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid comment ID"})
 		return
 	}
 
-	if result.RowsAffected == 0 {
-		c.JSON(http.StatusNotFound, gin.H{"error": "Comment not found"})
+	err = db.DeleteComment(id)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to delete comment: " + err.Error()})
 		return
 	}
 

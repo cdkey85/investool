@@ -48,18 +48,20 @@ func InitGlobalVars() {
 	if err := InitIndustryList(); err != nil {
 		logging.Error(nil, "init models global vars error:"+err.Error())
 	}
-	if err := InitFundAllList(); err != nil {
-		logging.Error(nil, "init models global vars error:"+err.Error())
-	}
-	if err := InitFund4433List(); err != nil {
-		logging.Error(nil, "init models global vars error:"+err.Error())
-	}
-	if err := InitFundTypeList(); err != nil {
-		logging.Error(nil, "init models global vars error:"+err.Error())
-	}
-	if err := InitFundManagers(); err != nil {
-		logging.Error(nil, "init models global vars error:"+err.Error())
-	}
+	/*
+		if err := InitFundAllList(); err != nil {
+			logging.Error(nil, "init models global vars error:"+err.Error())
+		}
+		if err := InitFund4433List(); err != nil {
+			logging.Error(nil, "init models global vars error:"+err.Error())
+		}
+		if err := InitFundTypeList(); err != nil {
+			logging.Error(nil, "init models global vars error:"+err.Error())
+		}
+		if err := InitFundManagers(); err != nil {
+			logging.Error(nil, "init models global vars error:"+err.Error())
+		}
+	*/
 	// 更新同步时间
 	SyncFundTime = time.Now()
 }
