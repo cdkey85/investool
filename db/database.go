@@ -9,7 +9,6 @@ import (
 	"log"
 	"os"
 	"path/filepath"
-	"runtime"
 	"sort"
 	"strconv"
 	"time"
@@ -31,8 +30,9 @@ var csvFilePath string
 
 // InitCSV 初始化CSV存储
 func InitCSV() {
-	_, filename, _, _ := runtime.Caller(0)
-	csvFilePath = filepath.Join(filepath.Dir(filename), "..", "data", "comments.csv")
+	// 使用相对路径，使程序在不同平台上都能正确运行
+	workDir, _ := os.Getwd()
+	csvFilePath = filepath.Join(workDir, "data", "comments.csv")
 
 	// 创建 data 目录（如果不存在）
 	dataDir := filepath.Dir(csvFilePath)

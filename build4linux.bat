@@ -13,7 +13,6 @@ go build -o investool-linux-amd64 main.go
 
 if %ERRORLEVEL% EQU 0 (
     echo Build successful: investool-linux-amd64
-    echo Note: This version will not support SQLite database functionality
     echo Checking file type...
     
     REM 使用PowerShell检查文件是否为ELF格式
@@ -24,7 +23,6 @@ if %ERRORLEVEL% EQU 0 (
     echo 1. Copy investool-linux-amd64 to your Linux machine
     echo 2. Make it executable: chmod +x investool-linux-amd64
     echo 3. Run it: ./investool-linux-amd64
-    echo Note: SQLite database functionality will not work with this version
 ) else (
     echo Build failed with error code %ERRORLEVEL%
 )
