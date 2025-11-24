@@ -25,7 +25,7 @@ func Check(ctx context.Context, keywords []string, opts core.CheckerOptions) (re
 	for _, stock := range stocks {
 		checker := core.NewChecker(ctx, opts)
 		checkResult, ok := checker.CheckFundamentals(ctx, stock)
-		k := fmt.Sprintf("%s-%s", stock.BaseInfo.SecurityNameAbbr, stock.BaseInfo.Secucode)
+		k := fmt.Sprintf("%s-%s", stock.BaseInfo.SecurityNameAbbr, stock.BaseInfo.SecurityCode)
 		results[k] = checkResult
 		table := newTable()
 		if !ok {

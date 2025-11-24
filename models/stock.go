@@ -125,7 +125,7 @@ func NewStock(ctx context.Context, baseInfo eastmoney.StockInfo) (Stock, error) 
 	wg.Add(1)
 	go func(ctx context.Context, s *Stock) {
 		defer wg.Done()
-		hf, err := datacenter.EastMoney.QueryHistoricalFinaMainData(ctx, s.BaseInfo.Secucode)
+		hf, err := datacenter.EastMoney.QueryHistoricalFinaMainData(ctx, s.BaseInfo.SecurityCode)
 		if err != nil {
 			logging.Error(ctx, "NewStock QueryHistoricalFinaMainData err:"+err.Error())
 			return
@@ -137,7 +137,7 @@ func NewStock(ctx context.Context, baseInfo eastmoney.StockInfo) (Stock, error) 
 		s.HistoricalFinaMainData = hf
 
 		// 历史市盈率 && 合理价格
-		peList, err := datacenter.EastMoney.QueryHistoricalPEList(ctx, s.BaseInfo.Secucode)
+		peList, err := datacenter.EastMoney.QueryHistoricalPEList(ctx, s.BaseInfo.SecurityCode)
 		if err != nil {
 			logging.Error(ctx, "NewStock QueryHistoricalPEList err:"+err.Error())
 			return
@@ -174,7 +174,7 @@ func NewStock(ctx context.Context, baseInfo eastmoney.StockInfo) (Stock, error) 
 	wg.Add(1)
 	go func(ctx context.Context, s *Stock) {
 		defer wg.Done()
-		valMap, err := datacenter.EastMoney.QueryValuationStatus(ctx, s.BaseInfo.Secucode)
+		valMap, err := datacenter.EastMoney.QueryValuationStatus(ctx, s.BaseInfo.SecurityCode)
 		if err != nil {
 			logging.Error(ctx, "NewStock QueryValuationStatus err:"+err.Error())
 			return
@@ -186,7 +186,7 @@ func NewStock(ctx context.Context, baseInfo eastmoney.StockInfo) (Stock, error) 
 	wg.Add(1)
 	go func(ctx context.Context, s *Stock) {
 		defer wg.Done()
-		hisPrice, err := datacenter.Eniu.QueryHistoricalStockPrice(ctx, s.BaseInfo.Secucode)
+		hisPrice, err := datacenter.Eniu.QueryHistoricalStockPrice(ctx, s.BaseInfo.SecurityCode)
 		if err != nil {
 			logging.Error(ctx, "NewStock QueryHistoricalStockPrice err:"+err.Error())
 			return
@@ -206,7 +206,7 @@ func NewStock(ctx context.Context, baseInfo eastmoney.StockInfo) (Stock, error) 
 	wg.Add(1)
 	go func(ctx context.Context, s *Stock) {
 		defer wg.Done()
-		cp, err := datacenter.EastMoney.QueryCompanyProfile(ctx, s.BaseInfo.Secucode)
+		cp, err := datacenter.EastMoney.QueryCompanyProfile(ctx, s.BaseInfo.SecurityCode)
 		if err != nil {
 			logging.Error(ctx, "NewStock QueryCompanyProfile err:"+err.Error())
 			return
@@ -234,7 +234,7 @@ func NewStock(ctx context.Context, baseInfo eastmoney.StockInfo) (Stock, error) 
 	wg.Add(1)
 	go func(ctx context.Context, s *Stock) {
 		defer wg.Done()
-		orgRatings, err := datacenter.EastMoney.QueryOrgRating(ctx, s.BaseInfo.Secucode)
+		orgRatings, err := datacenter.EastMoney.QueryOrgRating(ctx, s.BaseInfo.SecurityCode)
 		if err != nil {
 			logging.Debug(ctx, "NewStock QueryOrgRating err:"+err.Error())
 			return
@@ -246,7 +246,7 @@ func NewStock(ctx context.Context, baseInfo eastmoney.StockInfo) (Stock, error) 
 	wg.Add(1)
 	go func(ctx context.Context, s *Stock) {
 		defer wg.Done()
-		pps, err := datacenter.EastMoney.QueryProfitPredict(ctx, s.BaseInfo.Secucode)
+		pps, err := datacenter.EastMoney.QueryProfitPredict(ctx, s.BaseInfo.SecurityCode)
 		if err != nil {
 			logging.Debug(ctx, "NewStock QueryProfitPredict err:"+err.Error())
 			return
@@ -258,7 +258,7 @@ func NewStock(ctx context.Context, baseInfo eastmoney.StockInfo) (Stock, error) 
 	wg.Add(1)
 	go func(ctx context.Context, s *Stock) {
 		defer wg.Done()
-		jzpg, err := datacenter.EastMoney.QueryJiaZhiPingGu(ctx, s.BaseInfo.Secucode)
+		jzpg, err := datacenter.EastMoney.QueryJiaZhiPingGu(ctx, s.BaseInfo.SecurityCode)
 		if err != nil {
 			logging.Debug(ctx, "NewStock QueryJiaZhiPingGu err:"+err.Error())
 			return
@@ -270,7 +270,7 @@ func NewStock(ctx context.Context, baseInfo eastmoney.StockInfo) (Stock, error) 
 	wg.Add(1)
 	go func(ctx context.Context, s *Stock) {
 		defer wg.Done()
-		gincomeList, err := datacenter.EastMoney.QueryFinaGincomeData(ctx, s.BaseInfo.Secucode)
+		gincomeList, err := datacenter.EastMoney.QueryFinaGincomeData(ctx, s.BaseInfo.SecurityCode)
 		if err != nil {
 			logging.Error(ctx, "NewStock QueryFinaGincomeData err:"+err.Error())
 			return
@@ -289,7 +289,7 @@ func NewStock(ctx context.Context, baseInfo eastmoney.StockInfo) (Stock, error) 
 	wg.Add(1)
 	go func(ctx context.Context, s *Stock) {
 		defer wg.Done()
-		cashflow, err := datacenter.EastMoney.QueryFinaCashflowData(ctx, s.BaseInfo.Secucode)
+		cashflow, err := datacenter.EastMoney.QueryFinaCashflowData(ctx, s.BaseInfo.SecurityCode)
 		if err != nil {
 			logging.Error(ctx, "NewStock QueryFinaCashflowData err:"+err.Error())
 			return
@@ -312,7 +312,7 @@ func NewStock(ctx context.Context, baseInfo eastmoney.StockInfo) (Stock, error) 
 	wg.Add(1)
 	go func(ctx context.Context, s *Stock) {
 		defer wg.Done()
-		holders, err := datacenter.EastMoney.QueryFreeHolders(ctx, s.BaseInfo.Secucode)
+		holders, err := datacenter.EastMoney.QueryFreeHolders(ctx, s.BaseInfo.SecurityCode)
 		if err != nil {
 			logging.Error(ctx, "NewStock QueryFreeHolders err:"+err.Error())
 			return
@@ -328,7 +328,7 @@ func NewStock(ctx context.Context, baseInfo eastmoney.StockInfo) (Stock, error) 
 		end := now.Format("2006-01-02")
 		d, _ := time.ParseDuration("-1440h")
 		start := now.Add(d).Format("2006-01-02")
-		inflows, err := datacenter.Zszx.QueryMainMoneyNetInflows(ctx, s.BaseInfo.Secucode, start, end)
+		inflows, err := datacenter.Zszx.QueryMainMoneyNetInflows(ctx, s.BaseInfo.SecurityCode, start, end)
 		if err != nil {
 			logging.Error(ctx, "NewStock QueryMainMoneyNetInflows err:"+err.Error())
 			return

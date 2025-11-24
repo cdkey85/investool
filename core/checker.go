@@ -698,7 +698,7 @@ func (c Checker) CheckFundStocks(ctx context.Context, fund *models.Fund) (result
 	}
 	for _, stock := range stocks {
 		result, _ := c.CheckFundamentals(ctx, stock)
-		name := fmt.Sprintf("%s-%s", stock.BaseInfo.SecurityNameAbbr, stock.BaseInfo.Secucode)
+		name := fmt.Sprintf("%s-%s", stock.BaseInfo.SecurityNameAbbr, stock.BaseInfo.SecurityCode)
 		results.Names = append(results.Names, name)
 		results.CheckResults = append(results.CheckResults, result)
 		finaReportName := ""
@@ -714,7 +714,7 @@ func (c Checker) CheckFundStocks(ctx context.Context, fund *models.Fund) (result
 	return
 }
 
-//FundStocksSimilarity 基金持仓相似度
+// FundStocksSimilarity 基金持仓相似度
 type FundStocksSimilarity struct {
 	Fund *models.Fund `json:"fund"`
 	// 1:完全相同 0:完全不同

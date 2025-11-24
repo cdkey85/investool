@@ -29,7 +29,6 @@ func StockIndex(c *gin.Context) {
 		"IndustryList": models.StockIndustryList,
 	}
 	c.HTML(http.StatusOK, "stock_index.html", data)
-	return
 }
 
 // ParamStockSelector StockSelector 请求参数
@@ -69,15 +68,9 @@ func StockSelector(c *gin.Context) {
 		c.JSON(http.StatusOK, data)
 		return
 	}
-	stocks.SortByPriceSpace()
-	dlist := models.ExportorDataList{}
-	for _, s := range stocks {
-		dlist = append(dlist, models.NewExportorData(c, s))
-	}
-	data["Stocks"] = dlist
-	data["Columns"] = dlist.GetColumnInfos() // 设置列信息
+	data["Stocks"] = stocks
+	data["Columns"] = stocks.GetColumnInfos() // 设置列信息
 	c.JSON(http.StatusOK, data)
-	return
 }
 
 // ParamStockChecker StockChecker 请求参数
@@ -130,7 +123,7 @@ func StockChecker(c *gin.Context) {
 	for _, stock := range stocks {
 		result, _ := checker.CheckFundamentals(c, stock)
 		results = append(results, result)
-		stockName := fmt.Sprintf("%s-%s", stock.BaseInfo.SecurityNameAbbr, stock.BaseInfo.Secucode)
+		stockName := fmt.Sprintf("%s-%s", stock.BaseInfo.SecurityNameAbbr, stock.BaseInfo.SecurityCode)
 		stockNames = append(stockNames, stockName)
 		mainInflows = append(mainInflows, stock.MainMoneyNetInflows.String())
 
@@ -226,5 +219,4 @@ func StockChecker(c *gin.Context) {
 	data["Lines"] = lines
 	data["MainMoneyNetInflows"] = mainInflows
 	c.JSON(http.StatusOK, data)
-	return
 }

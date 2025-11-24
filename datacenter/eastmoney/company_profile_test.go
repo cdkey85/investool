@@ -11,7 +11,7 @@ func TestQueryCompanyProfile(t *testing.T) {
 	require.Nil(t, err)
 	require.NotEmpty(t, data.Keywords)
 	require.NotEmpty(t, data.MainForms)
-	require.NotEmpty(t, data.Secucode)
+	require.NotEmpty(t, data.SecurityCode)
 	require.NotEmpty(t, data.Name)
 	require.NotEmpty(t, data.Industry)
 	require.NotEmpty(t, data.Concept)

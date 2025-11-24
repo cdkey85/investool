@@ -23,25 +23,24 @@ $(document).ready(function () {
 
   // 筛选表单中开关显示检测表单
   $("#selector_with_checker").click(function () {
-    $("#checker_options").toggle();
+    $("#checker_options").toggleClass("hide");
   });
 
-  var human_float_slice = function (floats, unit) {
-    var result = "";
-    for (i = 0; i < floats.length; i++) {
-      var n = floats[i];
-      if (unit == "元") {
-        var yi = n / 100000000.0;
-        if (Math.abs(yi) >= 1) {
-          result += yi.toFixed(2) + "亿元<br/>\r\n";
-        } else if (n / 10000.0 >= 1) {
-          result += yi.toFixed(2) + "万元<br/>\r\n";
-        }
-      } else {
-        result += n.toFixed(2) + unit + "<br/>\r\n";
+  var beautify_value = function (value, title) {
+    if (value == null) return "";
+    
+    if (typeof value === 'number') {
+      var yi = value / 100000000.0;
+      var wan = value / 10000.0;
+      if (Math.abs(yi) >= 0.1) {
+        return yi.toFixed(2) + "亿";
+      } else if (Math.abs(wan) >= 1) {
+        return wan.toFixed(2) + "万";
       }
+      return value.toFixed(2);
     }
-    return result;
+    
+    return value.toString();
   };
 
   // 基本面选股请求处理
@@ -153,16 +152,10 @@ $(document).ready(function () {
           
           // 清空现有的表格内容
           $("#selector_result tbody").empty();
-          
-          // 生成表格内容
+
           $.each(data.Stocks, function (i, stock) {
-            var cm = stock.code.split(".");
-            if (stock.right_price != "--") {
-              stock.right_price = stock.right_price.toFixed(2);
-            }
-            
-            var row = "<tr>";
-            
+          // 生成表格内容
+          var row = "<tr>";
             // 根据列信息生成表格行
             if (data.Columns && data.Columns.length > 0) {
               $.each(data.Columns, function (j, column) {
@@ -172,16 +165,12 @@ $(document).ready(function () {
                 var value = stock[column.key];
                 
                 // 特殊处理某些字段
-                if (column.key === "code") {
-                  row += '<td class="' + tdClass + '"><span class="copybtn waves-effect waves-red" data-clipboard-text="' + cm[0] + '">' + cm[0] + '</span></td>';
-                } else if (column.key === "name") {
-                  row += '<td class="' + tdClass + '"><a target="_blank" href="http://quote.eastmoney.com/' + cm[1] + cm[0] + '.html">' + stock.name + "</a></td>";
-                } else if (column.key === "roe_5y" || column.key == "eps_5y" || column.key === "mll_5y" || column.key === "jll_5y" || column.key === "total_income_5y" || column.key === "net_profit_5y") {
-                  row += '<td class="' + tdClass + '">' + human_float_slice(value, "") + "</td>";
-                } else if (typeof value === 'number') {
-                  row += '<td class="' + tdClass + '">' + value.toFixed(2) + "</td>";
+                if (column.key === "SECURITY_CODE") {
+                  row += '<td class="' + tdClass + '"><span class="copybtn waves-effect waves-red" data-clipboard-text="' + stock.SECURITY_CODE + '">' + stock.SECURITY_CODE + '</span></td>';
+                } else if (column.key === "SECURITY_NAME_ABBR") {
+                  row += '<td class="' + tdClass + '"><a target="_blank" href="http://basic.10jqka.com.cn/' + stock.SECURITY_CODE + '"/>' + stock.SECURITY_NAME_ABBR + "</a></td>";
                 } else {
-                  row += '<td class="' + tdClass + '">' + value + "</td>";
+                  row += '<td class="' + tdClass + '">' + beautify_value(value, column.title) + "</td>";
                 }
               });
             }

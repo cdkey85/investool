@@ -177,7 +177,7 @@ func NewExportorData(ctx context.Context, stock Stock) ExportorData {
 	fina := stock.HistoricalFinaMainData[0]
 	return ExportorData{
 		Name:            stock.BaseInfo.SecurityNameAbbr,
-		Code:            stock.BaseInfo.Secucode,
+		Code:            stock.BaseInfo.SecurityCode,
 		Industry:        stock.BaseInfo.Industry,
 		Keywords:        stock.CompanyProfile.KeywordsString(),
 		CompanyProfile:  stock.CompanyProfile.ProfileString(),

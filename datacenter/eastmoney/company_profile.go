@@ -17,7 +17,7 @@ import (
 type RespJBZL struct {
 	Result struct {
 		Jibenziliao struct {
-			Secucode          string `json:"SecurityCode"`
+			SecurityCode      string `json:"SecurityCode"`
 			Companycode       string `json:"CompanyCode"`
 			Companyname       string `json:"CompanyName"`
 			Previousname      string `json:"PreviousName"`
@@ -61,7 +61,7 @@ type RespJBZL struct {
 type RespCPBD struct {
 	Result struct {
 		Ticaixiangqinglist []struct {
-			Secucode           string `json:"SecurityCode"`
+			SecurityCode       string `json:"SecurityCode"`
 			Keyword            string `json:"KeyWord"`
 			Mainpoint          string `json:"MainPoint"`
 			Mainpointcon       string `json:"MainPointCon"`
@@ -83,7 +83,7 @@ type RespCPBD struct {
 		} `json:"GuBenGuDong"`
 		Gudongrenshuunit string `json:"GuDongRenShuUnit"`
 		Gudongrenshulist []struct {
-			Secucode                string `json:"SecurityCode"`
+			SecurityCode            string `json:"SecurityCode"`
 			Changedate              string `json:"ChangeDate"`
 			Totalsh                 string `json:"TotalSh"`
 			Totalshchart            string `json:"TotalShChart"`
@@ -96,7 +96,7 @@ type RespCPBD struct {
 			Sumcirlishold           string `json:"SumCirLishold"`
 		} `json:"GuDongRenShuList"`
 		Gudongtongji struct {
-			Secucode                  string `json:"SecurityCode"`
+			SecurityCode              string `json:"SecurityCode"`
 			Reportdate                string `json:"ReportDate"`
 			Actualcontroller          string `json:"ActualController"`
 			Actualcontrollerrate      string `json:"ActualControllerRate"`
@@ -112,7 +112,7 @@ type RespCPBD struct {
 			Orgholderratepre          string `json:"OrgHolderRatePre"`
 		} `json:"GuDongTongJi"`
 		Zhuyinggouchenglist []struct {
-			Secucode             string `json:"SecurityCode"`
+			SecurityCode         string `json:"SecurityCode"`
 			Reporttype           string `json:"ReportType"`
 			Reportdate           string `json:"ReportDate"`
 			Mainform             string `json:"MainForm"`
@@ -122,7 +122,7 @@ type RespCPBD struct {
 			Flag                 string `json:"Flag"`
 		} `json:"ZhuYingGouChengList"`
 		Fenhongsongzhuanlist []struct {
-			Secucode       string `json:"SecurityCode"`
+			SecurityCode   string `json:"SecurityCode"`
 			Noticedate     string `json:"NoticeDate"`
 			Assigndscrpt   string `json:"AssignDscrpt"`
 			Exdividenddate string `json:"ExDividendDate"`
@@ -131,7 +131,7 @@ type RespCPBD struct {
 		Jinglirununit    string `json:"JingliRunUnit"`
 		Yingyeshouruunit string `json:"YingYeShouRuUnit"`
 		Danjicaiwulist   []struct {
-			Secucode         string `json:"SecurityCode"`
+			SecurityCode     string `json:"SecurityCode"`
 			Reportdate       string `json:"ReportDate"`
 			Netprofit        string `json:"NetProfit"`
 			Netprofitchart   string `json:"NetProfitChart"`
@@ -193,7 +193,7 @@ type MainForm struct {
 // CompanyProfile 公司简介资料
 type CompanyProfile struct {
 	// 股票代码
-	Secucode string
+	SecurityCode string
 	// 公司名称
 	Name string
 	// 所属行业
@@ -294,7 +294,7 @@ func (e EastMoney) QueryCompanyProfile(ctx context.Context, secuCode string) (Co
 	if resp.Status != 0 {
 		return profile, fmt.Errorf("%s %#v", secuCode, resp.Message)
 	}
-	profile.Secucode = resp.Result.Jibenziliao.Secucode
+	profile.SecurityCode = resp.Result.Jibenziliao.SecurityCode
 	profile.Name = resp.Result.Jibenziliao.Companyname
 	profile.Industry = resp.Result.Jibenziliao.Industry
 	profile.Concept = resp.Result.Jibenziliao.Block
