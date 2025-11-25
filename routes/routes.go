@@ -2,23 +2,30 @@
 
 package routes
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/axiaoxin-com/investool/webserver"
+	"github.com/gin-gonic/gin"
+)
 
 // Routes 注册 API URL 路由
 func Routes(app *gin.Engine) {
-	app.GET("/", StockIndex)
-	app.GET("/stock", StockIndex)
-	app.POST("/selector", StockSelector)
-	app.POST("/checker", StockChecker)
-	//app.GET("/fund", FundIndex)
-	//app.GET("/fund/filter", FundFilter)
-	//app.POST("/fund/check", FundCheck)
-	//app.GET("/about", About)
-	app.GET("/comment", Comment)
-	app.POST("/comment", AddComment)
-	app.DELETE("/comment/:id", DeleteComment)
-	//app.GET("/fund/similarity", FundSimilarity)
-	//app.GET("/materials", Materials)
-	//app.POST("/fund/query_by_stock", QueryFundByStock)
-	//app.GET("/fund/managers", FundManagers)
+	// 受保护的路由组 - 需要 HTTP Basic Auth
+	protected := app.Group("", webserver.GinBasicAuth())
+	{
+		protected.GET("/", StockIndex)
+		protected.GET("/stock", StockIndex)
+		protected.POST("/selector", StockSelector)
+		protected.POST("/checker", StockChecker)
+		protected.GET("/comment", Comment)
+		protected.POST("/comment", AddComment)
+		protected.DELETE("/comment/:id", DeleteComment)
+	}
+	//protected.GET("/fund", FundIndex)
+	//protected.GET("/fund/filter", FundFilter)
+	//protected.POST("/fund/check", FundCheck)
+	//protected.GET("/about", About)
+	//protected.GET("/fund/similarity", FundSimilarity)
+	//protected.GET("/materials", Materials)
+	//protected.POST("/fund/query_by_stock", QueryFundByStock)
+	//protected.GET("/fund/managers", FundManagers)
 }

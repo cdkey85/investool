@@ -151,11 +151,25 @@ func Run(app http.Handler) {
 				panic(err)
 			}
 		}
-		if err := srv.Serve(ln); err != nil {
-			logging.Error(nil, err.Error())
+		// 检查是否使用 HTTPS
+		enableHTTPS := viper.GetBool("server.enable_https")
+		if enableHTTPS {
+			certFile := viper.GetString("server.cert_file")
+			keyFile := viper.GetString("server.key_file")
+			if err := srv.ServeTLS(ln, certFile, keyFile); err != nil {
+				logging.Error(nil, err.Error())
+			}
+		} else {
+			if err := srv.Serve(ln); err != nil {
+				logging.Error(nil, err.Error())
+			}
 		}
 	}()
-	logging.Infof(nil, "Server is running on %s", srv.Addr)
+	protocol := "HTTP"
+	if viper.GetBool("server.enable_https") {
+		protocol = "HTTPS"
+	}
+	logging.Infof(nil, "Server is running on %s (protocol: %s)", srv.Addr, protocol)
 
 	// 监听中断信号， WriteTimeout 时间后优雅关闭服务
 	// syscall.SIGTERM 不带参数的 kill 命令

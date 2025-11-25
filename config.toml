@@ -27,7 +27,7 @@ env = "localhost"
 ########## server 相关配置
 [server]
     # server 运行地址，支持 HTTP 端口 ":port" 或 UNIX Socket "unix:/file"
-    addr = ":80"
+    addr = ":443"
     # gin mode ，可选值： debug 、 test 、 release
     mode = "debug"
     # 开启 pprof
@@ -35,6 +35,13 @@ env = "localhost"
     # 开启 prometheus metrics
     metrics = true
     host_url = ""
+    # HTTPS 相关配置
+    # 是否启用 HTTPS
+    enable_https = true
+    # SSL 证书文件路径
+    cert_file = "./cert/server.crt"
+    # SSL 密钥文件路径
+    key_file = "./cert/server.key"
 
 
 
@@ -128,11 +135,11 @@ env = "localhost"
     # 文档描述
     desc = "Using investool to develop gin app on fly."
     # 请求地址，端口要和 server.addr 一致，浏览器访问时需要区分 127.0.0.1 和 localhost
-    host = "localhost:80"
+    host = "localhost:443"
     # 请求地址的 basepath
     basepath = "/"
     # 支持的请求 schemes
-    schemes = ["http"]
+    schemes = ["https"]
 
 
 
