@@ -152,7 +152,7 @@ func (s Searcher) SearchFunds(ctx context.Context, fundCodes []string) (map[stri
 		}()
 	}
 	wg.Wait()
-	logging.Infof(ctx, "SearchFunds request end. latency:%+v", time.Now().Sub(start))
+	logging.Infof(ctx, "SearchFunds request end. latency:%+v", time.Since(start))
 	return result, nil
 }
 

@@ -64,7 +64,7 @@ func (e EastMoney) QueryFundByStock(ctx context.Context, stockName, stockCode st
 		"user-agent": uarand.GetRandom(),
 	}
 	err := goutils.HTTPGET(ctx, e.HTTPClient, apiurl, header, &resp)
-	latency := time.Now().Sub(beginTime).Milliseconds()
+	latency := time.Since(beginTime).Milliseconds()
 	logging.Debug(
 		ctx,
 		"EastMoney QueryFundByStock "+apiurl+" end",

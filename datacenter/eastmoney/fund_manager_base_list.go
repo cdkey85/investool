@@ -103,7 +103,7 @@ func (e EastMoney) FundMangerBaseList(ctx context.Context, mftype string, sortCo
 		result = append(result, resp.Datas...)
 		index++
 	}
-	latency := time.Now().Sub(beginTime).Milliseconds()
+	latency := time.Since(beginTime).Milliseconds()
 	logging.Debug(
 		ctx,
 		"EastMoney FundMangerBaseList end",
@@ -192,7 +192,7 @@ func (e EastMoney) QueryFundMsnMangerInfo(ctx context.Context, mgrid string) (*R
 	if err := goutils.HTTPGET(ctx, e.HTTPClient, apiurl, header, resp); err != nil {
 		return nil, err
 	}
-	latency := time.Now().Sub(beginTime).Milliseconds()
+	latency := time.Since(beginTime).Milliseconds()
 	logging.Debug(
 		ctx,
 		"EastMoney QueryFundMsnMangerInfo end",

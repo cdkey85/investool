@@ -66,7 +66,7 @@ func (e EastMoney) QueryZongHePingJia(ctx context.Context, secuCode string) (ZHP
 	}
 	resp := RespZongHePingJia{}
 	err = goutils.HTTPPOST(ctx, e.HTTPClient, req, &resp)
-	latency := time.Now().Sub(beginTime).Milliseconds()
+	latency := time.Since(beginTime).Milliseconds()
 	logging.Debug(
 		ctx,
 		"EastMoney QueryZongHePingJia "+apiurl+" end",

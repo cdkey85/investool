@@ -195,7 +195,7 @@ func (e EastMoney) QueryFundListByPage(ctx context.Context, fundType FundType, p
 		"user-agent": uarand.GetRandom(),
 	}
 	err = goutils.HTTPGET(ctx, e.HTTPClient, apiurl, header, &resp)
-	latency := time.Now().Sub(beginTime).Milliseconds()
+	latency := time.Since(beginTime).Milliseconds()
 	logging.Debug(
 		ctx,
 		"EastMoney QueryFundListByPage "+apiurl+" end",

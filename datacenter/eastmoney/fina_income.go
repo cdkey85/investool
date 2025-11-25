@@ -257,7 +257,7 @@ func (e EastMoney) QueryFinaGincomeData(ctx context.Context, secuCode string) (G
 	}
 	resp := RespFinaGincomeData{}
 	err = goutils.HTTPGET(ctx, e.HTTPClient, apiurl, nil, &resp)
-	latency := time.Now().Sub(beginTime).Milliseconds()
+	latency := time.Since(beginTime).Milliseconds()
 	logging.Debug(
 		ctx,
 		"EastMoney QueryFinaGincomeData "+apiurl+" end",

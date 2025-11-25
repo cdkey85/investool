@@ -34,7 +34,7 @@ func (c ChinaBond) QueryTree(ctx context.Context) (map[string]string, error) {
 		"User-Agent": uarand.GetRandom(),
 	}
 	err := goutils.HTTPGET(ctx, c.HTTPClient, apiurl, header, &resp)
-	latency := time.Now().Sub(beginTime).Milliseconds()
+	latency := time.Since(beginTime).Milliseconds()
 	logging.Debug(
 		ctx,
 		"ChinaBond QueryTree "+apiurl+" end",

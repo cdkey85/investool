@@ -455,7 +455,7 @@ func (e EastMoney) QueryHistoricalFinaMainData(ctx context.Context, secuCode str
 	}
 	resp := RespFinaMainData{}
 	err = goutils.HTTPGET(ctx, e.HTTPClient, apiurl, nil, &resp)
-	latency := time.Now().Sub(beginTime).Milliseconds()
+	latency := time.Since(beginTime).Milliseconds()
 	logging.Debug(
 		ctx,
 		"EastMoney QueryHistoricalFinaMainData "+apiurl+" end",
@@ -520,7 +520,7 @@ func (e EastMoney) QueryFinaPublishDateList(ctx context.Context, securityCode st
 	}
 	resp := RespFinaPublishDate{}
 	err = goutils.HTTPGET(ctx, e.HTTPClient, apiurl, nil, &resp)
-	latency := time.Now().Sub(beginTime).Milliseconds()
+	latency := time.Since(beginTime).Milliseconds()
 	logging.Debug(
 		ctx,
 		"EastMoney QueryFinaPublishDate "+apiurl+" end",

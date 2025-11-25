@@ -789,5 +789,5 @@ func (f Fund) EstabYears(ctx context.Context) float64 {
 		logging.Errorf(ctx, "EstabYears parse date err:%v", err)
 		return 0
 	}
-	return time.Now().Sub(date).Hours() / 24.0 / 365.0
+	return time.Since(date).Hours() / 24.0 / 365.0
 }

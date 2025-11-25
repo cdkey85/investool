@@ -32,7 +32,7 @@ func (e EastMoney) SearchFund(ctx context.Context, kw string) (results []SearchF
 	}
 	resp, err := goutils.HTTPGETRaw(ctx, e.HTTPClient, apiurl, header)
 	strresp := string(resp)
-	latency := time.Now().Sub(beginTime).Milliseconds()
+	latency := time.Since(beginTime).Milliseconds()
 	logging.Debug(ctx, "EastMoney SearchFund "+apiurl+" end",
 		zap.Int64("latency(ms)", latency),
 		// zap.Any("resp", strresp),

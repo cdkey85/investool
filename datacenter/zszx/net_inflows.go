@@ -123,7 +123,7 @@ func (z Zszx) QueryMainMoneyNetInflows(ctx context.Context, secuCode, startDate,
 	}
 	resp := RespMainMoneyNetInflows{}
 	err = goutils.HTTPGET(ctx, z.HTTPClient, apiurl, nil, &resp)
-	latency := time.Now().Sub(beginTime).Milliseconds()
+	latency := time.Since(beginTime).Milliseconds()
 	logging.Debug(
 		ctx,
 		"Zszx QueryMainMoneyNetInflows "+apiurl+" end",

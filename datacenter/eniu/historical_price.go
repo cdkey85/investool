@@ -91,7 +91,7 @@ func (e Eniu) QueryHistoricalStockPrice(ctx context.Context, secuCode string) (R
 	beginTime := time.Now()
 	resp := RespHistoricalStockPrice{}
 	err := goutils.HTTPGET(ctx, e.HTTPClient, apiurl, nil, &resp)
-	latency := time.Now().Sub(beginTime).Milliseconds()
+	latency := time.Since(beginTime).Milliseconds()
 	logging.Debug(ctx, "EastMoney QueryOrgRating "+apiurl+" end", zap.Int64("latency(ms)", latency), zap.Any("resp", resp))
 	return resp, err
 }

@@ -52,7 +52,7 @@ func (c ChinaBond) QueryFxsyl(ctx context.Context, treeItemID, date string) ([][
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("User-Agent", uarand.GetRandom())
 	err = goutils.HTTPPOST(ctx, c.HTTPClient, req, &resp)
-	latency := time.Now().Sub(beginTime).Milliseconds()
+	latency := time.Since(beginTime).Milliseconds()
 	logging.Debug(
 		ctx,
 		"ChinaBond QueryFxsyl "+apiurl+" end",

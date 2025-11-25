@@ -176,7 +176,7 @@ func (e EastMoney) FundMangers(ctx context.Context, ft, sc, st string) (FundMana
 		beginTime := time.Now()
 		resp, err := goutils.HTTPGETRaw(ctx, e.HTTPClient, apiurl, header)
 		strresp := string(resp)
-		latency := time.Now().Sub(beginTime).Milliseconds()
+		latency := time.Since(beginTime).Milliseconds()
 		logging.Debug(ctx, "EastMoney FundMangers "+apiurl+" end",
 			zap.Int64("latency(ms)", latency),
 			zap.Int("index", index),
@@ -306,7 +306,7 @@ func (e EastMoney) FundMangers(ctx context.Context, ft, sc, st string) (FundMana
 		// 等20个goroutine全部完了再开始新的，不然内存可能不够
 		index++
 	}
-	latency := time.Now().Sub(beginTime).Milliseconds()
+	latency := time.Since(beginTime).Milliseconds()
 	logging.Debug(
 		ctx,
 		"EastMoney FundMangers end",

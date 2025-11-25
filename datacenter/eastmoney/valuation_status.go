@@ -53,7 +53,7 @@ func (e EastMoney) QueryValuationStatus(ctx context.Context, secuCode string) (m
 	if err := goutils.HTTPGET(ctx, e.HTTPClient, apiurl1, nil, &resp); err != nil {
 		return nil, err
 	}
-	latency := time.Now().Sub(beginTime).Milliseconds()
+	latency := time.Since(beginTime).Milliseconds()
 	logging.Debug(
 		ctx,
 		"EastMoney QueryValuationStatus "+apiurl1+" end",
@@ -78,7 +78,7 @@ func (e EastMoney) QueryValuationStatus(ctx context.Context, secuCode string) (m
 	if err := goutils.HTTPGET(ctx, e.HTTPClient, apiurl2, nil, &resp); err != nil {
 		return nil, err
 	}
-	latency = time.Now().Sub(beginTime).Milliseconds()
+	latency = time.Since(beginTime).Milliseconds()
 	logging.Debug(
 		ctx,
 		"EastMoney QueryValuationStatus "+apiurl2+" end",
@@ -103,7 +103,7 @@ func (e EastMoney) QueryValuationStatus(ctx context.Context, secuCode string) (m
 	if err := goutils.HTTPGET(ctx, e.HTTPClient, apiurl3, nil, &resp); err != nil {
 		return nil, err
 	}
-	latency = time.Now().Sub(beginTime).Milliseconds()
+	latency = time.Since(beginTime).Milliseconds()
 	logging.Debug(
 		ctx,
 		"EastMoney QueryValuationStatus "+apiurl3+" end",
@@ -126,7 +126,7 @@ func (e EastMoney) QueryValuationStatus(ctx context.Context, secuCode string) (m
 		return nil, err
 	}
 	err = goutils.HTTPGET(ctx, e.HTTPClient, apiurl4, nil, &resp)
-	latency = time.Now().Sub(beginTime).Milliseconds()
+	latency = time.Since(beginTime).Milliseconds()
 	logging.Debug(
 		ctx,
 		"EastMoney QueryValuationStatus "+apiurl4+" end",

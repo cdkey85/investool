@@ -127,7 +127,7 @@ func (e EastMoney) QueryJiaZhiPingGu(ctx context.Context, secuCode string) (JZPG
 	}
 	resp := RespJiaZhiPingGu{}
 	err = goutils.HTTPPOST(ctx, e.HTTPClient, req, &resp)
-	latency := time.Now().Sub(beginTime).Milliseconds()
+	latency := time.Since(beginTime).Milliseconds()
 	logging.Debug(
 		ctx,
 		"EastMoney QueryJiaZhiPingGu "+apiurl+" end",

@@ -44,7 +44,7 @@ func (e EastMoney) QueryIndustryList(ctx context.Context) ([]string, error) {
 	}
 	resp := RespIndustryList{}
 	err = goutils.HTTPPOST(ctx, e.HTTPClient, req, &resp)
-	latency := time.Now().Sub(beginTime).Milliseconds()
+	latency := time.Since(beginTime).Milliseconds()
 	logging.Debug(ctx, "EastMoney IndustryList "+apiurl+" end",
 		zap.Int64("latency(ms)", latency),
 		// zap.Any("resp", resp),
