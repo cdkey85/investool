@@ -137,10 +137,19 @@ func NewStock(ctx context.Context, baseInfo eastmoney.StockInfo) (Stock, error) 
 		s.HistoricalFinaMainData = hf
 
 		// 历史市盈率 && 合理价格
-		peList, err := datacenter.EastMoney.QueryHistoricalPEList(ctx, s.BaseInfo.Secucode)
+		eniuPEData, err := datacenter.Eniu.QueryHistoricalPE(ctx, s.BaseInfo.Secucode)
 		if err != nil {
-			logging.Error(ctx, "NewStock QueryHistoricalPEList err:"+err.Error())
+			logging.Error(ctx, "NewStock QueryHistoricalPE err:"+err.Error())
 			return
+		}
+		// 将eniu的RespHistoricalPE转换为eastmoney.HistoricalPEList
+		var peList eastmoney.HistoricalPEList
+		for i := 0; i < len(eniuPEData.Date); i++ {
+			pe := eastmoney.HistoricalPE{
+				Date:  eniuPEData.Date[i],
+				Value: eniuPEData.PE[i],
+			}
+			peList = append(peList, pe)
 		}
 		s.HistoricalPEList = peList
 
