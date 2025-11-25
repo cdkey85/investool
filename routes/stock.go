@@ -123,7 +123,7 @@ func StockChecker(c *gin.Context) {
 	for _, stock := range stocks {
 		result, _ := checker.CheckFundamentals(c, stock)
 		results = append(results, result)
-		stockName := fmt.Sprintf("%s-%s", stock.BaseInfo.SecurityNameAbbr, stock.BaseInfo.SecurityCode)
+		stockName := fmt.Sprintf("%s-%s", stock.BaseInfo.SecurityNameAbbr, stock.BaseInfo.Secucode)
 		stockNames = append(stockNames, stockName)
 		mainInflows = append(mainInflows, stock.MainMoneyNetInflows.String())
 

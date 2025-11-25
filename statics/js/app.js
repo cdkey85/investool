@@ -37,7 +37,11 @@ $(document).ready(function () {
       } else if (Math.abs(wan) >= 1) {
         return wan.toFixed(2) + "万";
       }
-      return value.toFixed(2);
+
+      if (Number.isInteger(value))
+        return value.toString();
+      else
+        return value.toFixed(2);
     }
     
     return value.toString();

@@ -698,7 +698,7 @@ func (c Checker) CheckFundStocks(ctx context.Context, fund *models.Fund) (result
 	}
 	for _, stock := range stocks {
 		result, _ := c.CheckFundamentals(ctx, stock)
-		name := fmt.Sprintf("%s-%s", stock.BaseInfo.SecurityNameAbbr, stock.BaseInfo.SecurityCode)
+		name := fmt.Sprintf("%s-%s", stock.BaseInfo.SecurityNameAbbr, stock.BaseInfo.Secucode)
 		results.Names = append(results.Names, name)
 		results.CheckResults = append(results.CheckResults, result)
 		finaReportName := ""
