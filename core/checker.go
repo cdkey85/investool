@@ -288,7 +288,7 @@ func (c Checker) CheckFundamentals(ctx context.Context, stock models.Stock) (res
 	// 整体质地
 	checkItemName = "整体质地"
 	itemOK = true
-	desc = stock.JZPG.GetValueTotalScore()
+	desc = stock.JZPG.String()
 	if !goutils.IsStrInSlice(stock.JZPG.GetValueTotalScore(), []string{"优秀", "良好"}) {
 		ok = false
 		itemOK = false

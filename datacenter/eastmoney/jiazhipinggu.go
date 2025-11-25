@@ -77,7 +77,8 @@ func (j JZPG) GetValueTotalScore() string {
 
 func (j JZPG) String() string {
 	return fmt.Sprintf(
-		"%s属于%s行业，排名%s/%s。\n盈利能力%s，成长能力%s，营运偿债能力%s，现金流%s，估值%s，整体质地%s。",
+		"%s：%s属于%s行业，排名%s/%s。\n盈利能力%s，成长能力%s，营运偿债能力%s，现金流%s，估值%s，整体质地%s。",
+		j.Reportdate,
 		j.Secname,
 		j.Industryname,
 		j.GetValueRanking(),

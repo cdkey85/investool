@@ -56,12 +56,15 @@ func (s Sina) KeywordSearch(ctx context.Context, kw string) (results []SearchRes
 	data := strings.Trim(ds[1], `"`)
 	for _, line := range strings.Split(data, ";") {
 		lineitems := strings.Split(line, ",")
-		if len(lineitems) < 9 {
+		if len(lineitems) < 7 {
 			continue
 		}
 		market, err := strconv.Atoi(lineitems[1])
 		if err != nil {
 			logging.Errorf(ctx, "market:%s atoi error:%v", lineitems[1], err)
+		}
+		if len(lineitems[3]) < 4 {
+			continue
 		}
 		secucode := lineitems[3][2:] + "." + lineitems[3][:2]
 		result := SearchResult{
