@@ -432,7 +432,7 @@ func (e EastMoney) QuerySelectedStocksWithFilter(ctx context.Context, filter Fil
 	sty := ""
 	for i := 0; i < stockInfoType.NumField(); i++ {
 		field := stockInfoType.Field(i)
-		need := "1"
+		need := field.Tag.Get("need")
 		if need != "0" {
 			sty += field.Tag.Get("json") + ","
 		}
